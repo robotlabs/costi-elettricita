@@ -169,6 +169,21 @@ p { margin: 4px 0 0; }
 .tip .row .k { display: inline-flex; align-items: center; gap: 6px; color: var(--text-2); }
 .tip .row.tot { border-top: 1px solid var(--grid); margin-top: 4px; padding-top: 4px; font-weight: 600; }
 
+/* esempio lampadina LED */
+.led { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 24px; align-items: start; }
+.led-in { display: grid; gap: 8px; }
+.led-in label { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; color: var(--text-2); }
+.led-in label span { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.led-in .u { font-style: normal; width: 14px; }
+.led-in input {
+  width: 72px; font: inherit; font-size: 14px; text-align: right; padding: 5px 8px; border-radius: 7px;
+  border: 1px solid var(--border); background: var(--page); color: var(--text); font-variant-numeric: tabular-nums;
+}
+.led-in input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.led-out .big { font-size: 40px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+.led-out .tbl { margin-top: 12px; max-width: 420px; }
+.led-out .note { margin-top: 10px; }
+
 /* barra segmentata (composizione) */
 .segbar { display: flex; gap: 2px; height: 28px; margin: 4px 0 14px; }
 .segbar div { border-radius: 4px; min-width: 0; color: #fff; font-size: 12px; font-weight: 600; padding: 0 6px; display: flex; align-items: center; white-space: nowrap; overflow: visible; }
@@ -208,6 +223,7 @@ p { margin: 4px 0 0; }
   .kpis { grid-template-columns: 1fr 1fr; }
   .kpi.hero { grid-column: 1 / -1; }
   .grid2 { grid-template-columns: 1fr; }
+  .led { grid-template-columns: 1fr; gap: 16px; }
 }
 @media (max-width: 520px) {
   .kpi.hero .value { font-size: 36px; }

@@ -138,7 +138,7 @@ export function parseBill(text) {
   let energia = null, energiaFissa = null, trasporto = null, oneri = null, rete = null, bonus = 0;
   let accise = num(first(t, /le accise ammontano a\s*(-?[\d.]+,\d{2})/i));
   let iva = num(first(t, /l.IVA ammonta a\s*(-?[\d.]+,\d{2})/i));
-  let totaleBolletta = null, totaleDaPagare = null, canone = null;
+  let totaleBolletta = null, totaleDaPagare = null, canone = null, quotaConsumi = null;
 
   if (isNew) {
     let section = null, vendita = 0, venditaFissa = 0, reteSum = 0, seen = false;
@@ -148,6 +148,11 @@ export function parseBill(text) {
       else if (/^\s*Quota potenza/i.test(line)) section = 'potenza';
       else if (/Accise e IVA|TOTALE BOLLETTA/i.test(line)) { if (seen) section = null; }
       if (!section) continue;
+      // riga riassuntiva "166 kWh x 0,33 €/kWh 54,87 €": costo di tutto ciò che dipende dai kWh (energia + rete + oneri), IVA esclusa
+      if (section === 'consumi' && quotaConsumi == null && /kWh\s*x/i.test(line)) {
+        const a = lastAmount(line);
+        if (a != null) quotaConsumi = a;
+      }
       if (/di cui spesa per vendita/i.test(line)) {
         const a = lastAmount(line); seen = true;
         if (a != null) { vendita += a; if (section === 'fissa') venditaFissa += a; }
@@ -225,7 +230,8 @@ export function parseBill(text) {
       accise, iva, canone: canone || 0, altrePartite: r2(bonus || 0),
       altro: altro != null && Math.abs(altro) > 0.005 ? altro : 0,
     },
-    totaleBolletta, totaleDaPagare,
+    totaleBolletta, totaleDaPagare, quotaConsumi,
+    ivaRate: num(first(t, /IVA vendite\s*(\d+)\s*%/i)) ?? null,
     ok: warnings.length === 0,
     warnings,
   };

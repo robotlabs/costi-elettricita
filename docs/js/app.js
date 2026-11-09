@@ -153,6 +153,7 @@ function render() {
   const months = aggregate(list);
   const withData = months.filter((m) => m.bills.length);
   renderMain(months);
+  renderLed();
   renderContract(months, list);
   renderCompare(list);
   renderEnergyPrice(months);
@@ -319,6 +320,39 @@ function renderMain(months) {
   });
 }
 
+// Esempio lampadina: costo di un kWh in più (energia + rete e oneri a consumo, IVA inclusa) dall'ultima bolletta
+const metered = (b) => (b.bands ? b.bands.f1 + b.bands.f2 + b.bands.f3 : b.kwh);
+const marginal = (b) => (b.quotaConsumi && metered(b) ? (b.quotaConsumi / metered(b)) * (1 + (b.ivaRate ?? 10) / 100) : null);
+function renderLed() {
+  const byDate = [...bills].sort((a, b) => (b.periodStart || '').localeCompare(a.periodStart || ''));
+  const ref = byDate.find((b) => marginal(b));
+  const fixedRef = byDate.find((b) => b.priceType === 'fisso' && marginal(b));
+  const out = $('ledOut');
+  if (!ref) { out.innerHTML = '<p class="muted">Servono bollette nel formato con lo "scontrino dell\'energia" per calcolare il prezzo.</p>'; return; }
+  const f = new FormData($('ledForm'));
+  const v = (k, d) => { const x = parseFloat(String(f.get(k)).replace(',', '.')); return Number.isFinite(x) && x >= 0 ? x : d; };
+  const w = v('w', 9), br = Math.min(100, v('b', 50)), h = Math.min(24, v('h', 12)), n = Math.max(1, Math.round(v('n', 1))), sb = v('s', 0.3);
+  const kwhDay = ((w * br / 100) * h + sb * (24 - h)) * n / 1000;
+  const price = marginal(ref);
+  const periods = [['Al giorno', 1], ['Al mese', 365 / 12], ["All'anno", 365]];
+  const eur3 = (x) => (x < 1 ? x.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 3, maximumFractionDigits: 3 }) : eur.format(x));
+  const kwhFmt = (x) => x.toLocaleString('it-IT', { maximumFractionDigits: x < 10 ? 2 : 1 }) + ' kWh';
+  let html = `<div class="big">${eur.format(kwhDay * 365 / 12 * price)} <span class="muted" style="font-size:16px;font-weight:500">al mese</span></div>
+    <div class="muted small">${eur.format(kwhDay * 365 * price)} all'anno · ${n > 1 ? n + ' lampadine, ' : ''}${(w * br / 100).toLocaleString('it-IT')} W da accesa</div>
+    <table class="tbl"><thead><tr><th></th><th>Consumo</th><th>Costo</th></tr></thead><tbody>` +
+    periods.map(([l, d]) => `<tr><td>${l}</td><td>${kwhFmt(kwhDay * d)}</td><td class="strong">${eur3(kwhDay * d * price)}</td></tr>`).join('') +
+    `</tbody></table>
+    <p class="muted small note">Prezzo usato: <strong>${fP(price)}</strong>, cioè quanto ti costa un kWh in più nell'ultima bolletta
+    (${mLong(monthOf(ref))}, ${ref.priceType || 'n.d.'}): energia, rete e oneri a consumo, IVA ${ref.ivaRate ?? 10}% inclusa.
+    Le quote fisse no, perché le paghi comunque. A metà luminosità si stima metà della potenza.</p>`;
+  if (fixedRef && fixedRef !== ref && ref.priceType !== 'fisso') {
+    const pf = marginal(fixedRef);
+    html += `<p class="small note">Col prezzo fisso di prima (${fP(pf)}, ${mLong(monthOf(fixedRef))}) la stessa lampadina costava
+      <strong>${eur.format(kwhDay * 365 * pf)}</strong> all'anno invece di <strong>${eur.format(kwhDay * 365 * price)}</strong>.</p>`;
+  }
+  out.innerHTML = html;
+}
+
 // 2. costo per kWh mese per mese, colorato per tipo di contratto, con la media di ogni periodo
 function renderContract(months, list) {
   typeLegend($('contractLegend'), months);
@@ -430,6 +464,7 @@ function renderBills(list, months) {
 }
 
 // ---------- eventi ----------
+$('ledForm').addEventListener('input', () => { if (bills.length) renderLed(); });
 $('rangeSeg').addEventListener('click', (e) => {
   const v = e.target.closest('button')?.dataset.v;
   if (v) { range = v; render(); }
