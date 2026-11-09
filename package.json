@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "node tools/serve.mjs",
-    "test": "node tools/parse-all.mjs data"
+    "test": "node tools/parse-all.mjs data",
+    "dati": "node tools/build-data.mjs data"
   },
   "devDependencies": {
     "pdfjs-dist": "4.4.168"

@@ -1,0 +1,1207 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-09T07:53:48.265Z",
+ "bills": [
+  {
+   "invoiceDate": "2024-07-20",
+   "dueDate": "2024-08-09",
+   "periodStart": "2024-06-22",
+   "periodEnd": "2024-06-30",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 18,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 8,
+    "f2": 4,
+    "f3": 6,
+    "from": "2024-06-21",
+    "to": "2024-06-30",
+    "estimated": true
+   },
+   "costs": {
+    "energia": 4.35,
+    "energiaFissa": 2.13,
+    "trasporto": 2.44,
+    "oneri": 0.7,
+    "accise": 0,
+    "iva": 0.75,
+    "canone": 0,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 8.24,
+   "totaleDaPagare": 8.24,
+   "ok": true,
+   "warnings": [],
+   "key": "n:1rpy7ye",
+   "hashes": [
+    "0c51588e85a009f724c42908a464ac4a7c788b0dfb7f05c6c906b391533b2e9c"
+   ]
+  },
+  {
+   "invoiceDate": "2024-08-18",
+   "dueDate": "2024-09-09",
+   "periodStart": "2024-07-01",
+   "periodEnd": "2024-07-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 135,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 64,
+    "f2": 29,
+    "f3": 42,
+    "from": "2024-06-30",
+    "to": "2024-07-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 26.76,
+    "energiaFissa": 8.11,
+    "trasporto": 9.09,
+    "oneri": 5.21,
+    "accise": 0,
+    "iva": 4.11,
+    "canone": 17.34,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 45.17,
+   "totaleDaPagare": 62.51,
+   "ok": true,
+   "warnings": [],
+   "key": "n:owj59r",
+   "hashes": [
+    "50b324ddf4b70e524df1d31e602e5443a7f54ecfdefd01e46bcdac0815c1ef1d"
+   ]
+  },
+  {
+   "invoiceDate": "2024-09-08",
+   "dueDate": "2024-09-30",
+   "periodStart": "2024-08-01",
+   "periodEnd": "2024-08-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 113,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 48,
+    "f2": 22,
+    "f3": 43,
+    "from": "2024-07-31",
+    "to": "2024-08-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 22.47,
+    "energiaFissa": 8.11,
+    "trasporto": 8.82,
+    "oneri": 4.37,
+    "accise": 0,
+    "iva": 3.57,
+    "canone": 8.67,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 39.23,
+   "totaleDaPagare": 47.9,
+   "ok": true,
+   "warnings": [],
+   "key": "n:qd1hyk",
+   "hashes": [
+    "20a7d0c39be505f89d8b245234741861b1cd2d7e4c777cc1449e24f45fc7bcbe"
+   ]
+  },
+  {
+   "invoiceDate": "2024-10-11",
+   "dueDate": "2024-10-31",
+   "periodStart": "2024-09-01",
+   "periodEnd": "2024-09-30",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 110,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 42,
+    "f2": 29,
+    "f3": 39,
+    "from": "2024-08-31",
+    "to": "2024-09-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 21.81,
+    "energiaFissa": 8.11,
+    "trasporto": 8.78,
+    "oneri": 4.25,
+    "accise": 0,
+    "iva": 3.48,
+    "canone": 8.67,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 38.32,
+   "totaleDaPagare": 46.99,
+   "ok": true,
+   "warnings": [],
+   "key": "n:1sfaqp4",
+   "hashes": [
+    "818f40b5ff4d4097f2af5445432eb42d65d8ca48b19fc6e85836b22640a5e415"
+   ]
+  },
+  {
+   "invoiceDate": "2024-11-11",
+   "dueDate": "2024-12-02",
+   "periodStart": "2024-10-01",
+   "periodEnd": "2024-10-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 136,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 62,
+    "f2": 38,
+    "f3": 36,
+    "from": "2024-09-30",
+    "to": "2024-10-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 25.23,
+    "energiaFissa": 8.11,
+    "trasporto": 9.1,
+    "oneri": 5.25,
+    "accise": 0,
+    "iva": 3.96,
+    "canone": 8.67,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 43.54,
+   "totaleDaPagare": 52.21,
+   "ok": true,
+   "warnings": [],
+   "key": "n:11mzcv0",
+   "hashes": [
+    "059e8a78b3b11417f7a6d5029bf053bb88bdc6ace4511542b792f21d4aa1cd4c",
+    "059e8a78b3b11417f7a6d5029bf053bb88bdc6ace4511542b792f21d4aa1cd4c"
+   ]
+  },
+  {
+   "invoiceDate": "2024-12-07",
+   "dueDate": "2024-12-27",
+   "periodStart": "2024-11-01",
+   "periodEnd": "2024-11-30",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 207,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 94,
+    "f2": 69,
+    "f3": 44,
+    "from": "2024-10-31",
+    "to": "2024-11-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 34.61,
+    "energiaFissa": 8.11,
+    "trasporto": 9.96,
+    "oneri": 8,
+    "accise": 1.29,
+    "iva": 5.39,
+    "canone": 0,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 59.25,
+   "totaleDaPagare": 59.25,
+   "ok": true,
+   "warnings": [],
+   "key": "n:zjl888",
+   "hashes": [
+    "aae3dac6e07e4fde2832758f45db36c5c3522ea8f5734a445c6cfca2c71e099d"
+   ]
+  },
+  {
+   "invoiceDate": "2025-01-13",
+   "dueDate": "2025-02-03",
+   "periodStart": "2024-12-01",
+   "periodEnd": "2024-12-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 197,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 91,
+    "f2": 51,
+    "f3": 55,
+    "from": "2024-11-30",
+    "to": "2024-12-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 34.1,
+    "energiaFissa": 8.11,
+    "trasporto": 9.84,
+    "oneri": 7.61,
+    "accise": 1.07,
+    "iva": 5.26,
+    "canone": 0,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 57.88,
+   "totaleDaPagare": 57.88,
+   "ok": true,
+   "warnings": [],
+   "key": "n:1vpel5i",
+   "hashes": [
+    "949a5c175f26474eccfbb68d93811a38d0c2d961e6ed3dcef41b5183c1700de3"
+   ]
+  },
+  {
+   "invoiceDate": "2025-02-14",
+   "dueDate": "2025-03-06",
+   "periodStart": "2025-01-01",
+   "periodEnd": "2025-01-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 156,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 61,
+    "f2": 44,
+    "f3": 51,
+    "from": "2024-12-31",
+    "to": "2025-01-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 29.73,
+    "energiaFissa": 8.11,
+    "trasporto": 10.26,
+    "oneri": 5.02,
+    "accise": 0.14,
+    "iva": 4.52,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 49.67,
+   "totaleDaPagare": 58.67,
+   "ok": true,
+   "warnings": [],
+   "key": "n:1xdzhq1",
+   "hashes": [
+    "ab61dc0b0c4403eba77874082ece778a8d003b12ccbc98b13fc609b26632a2eb",
+    "ab61dc0b0c4403eba77874082ece778a8d003b12ccbc98b13fc609b26632a2eb"
+   ]
+  },
+  {
+   "invoiceDate": "2025-03-07",
+   "dueDate": "2025-03-27",
+   "periodStart": "2025-02-01",
+   "periodEnd": "2025-02-28",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 200,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 99,
+    "f2": 53,
+    "f3": 48,
+    "from": "2025-01-31",
+    "to": "2025-02-28",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 35.46,
+    "energiaFissa": 8.11,
+    "trasporto": 10.86,
+    "oneri": 6.44,
+    "accise": 1.14,
+    "iva": 5.39,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 59.29,
+   "totaleDaPagare": 68.29,
+   "ok": true,
+   "warnings": [],
+   "key": "n:p21thm",
+   "hashes": [
+    "af4b5fb94e9a8c0c59f0b490063e99a9a5d125008ae36938ee047f3edee49151"
+   ]
+  },
+  {
+   "invoiceDate": "2025-04-09",
+   "dueDate": "2025-04-29",
+   "periodStart": "2025-03-01",
+   "periodEnd": "2025-03-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 230,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 99,
+    "f2": 68,
+    "f3": 63,
+    "from": "2025-02-28",
+    "to": "2025-03-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 37.84,
+    "energiaFissa": 8.11,
+    "trasporto": 11.27,
+    "oneri": 7.41,
+    "accise": 2.04,
+    "iva": 5.86,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 64.42,
+   "totaleDaPagare": 73.42,
+   "ok": true,
+   "warnings": [],
+   "key": "n:1qv9v37",
+   "hashes": [
+    "d4352f2766f4ba32135f526fc2ace5a945c6050470a9904baaf9f1e8bfc2d6e0"
+   ]
+  },
+  {
+   "invoiceDate": "2025-05-09",
+   "dueDate": "2025-05-29",
+   "periodStart": "2025-04-01",
+   "periodEnd": "2025-04-30",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 132,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 56,
+    "f2": 38,
+    "f3": 38,
+    "from": "2025-03-31",
+    "to": "2025-04-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 25.37,
+    "energiaFissa": 8.11,
+    "trasporto": 9.95,
+    "oneri": 4.14,
+    "accise": 0,
+    "iva": 3.95,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 43.41,
+   "totaleDaPagare": 52.41,
+   "ok": true,
+   "warnings": [],
+   "key": "n:qqmu9f",
+   "hashes": [
+    "59a03113036a5fad1bbf24e797196128120f23c422893180398b64a51a4c6c36"
+   ]
+  },
+  {
+   "invoiceDate": "2025-06-08",
+   "dueDate": "2025-06-30",
+   "periodStart": "2025-05-01",
+   "periodEnd": "2025-05-31",
+   "supplier": "Octopus Energy",
+   "format": "quadro-sintetico",
+   "offer": "Octopus Fissa 12M v64",
+   "priceType": "fisso",
+   "kwh": 156,
+   "potenza": 300,
+   "annualKwh": 2067,
+   "bands": {
+    "f1": 67,
+    "f2": 43,
+    "f3": 46,
+    "from": "2025-04-30",
+    "to": "2025-05-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 28.34,
+    "energiaFissa": 8.11,
+    "trasporto": 10.32,
+    "oneri": 4.89,
+    "accise": 0.14,
+    "iva": 4.36,
+    "canone": 9,
+    "altrePartite": -0.09,
+    "altro": 0
+   },
+   "totaleBolletta": 47.96,
+   "totaleDaPagare": 56.96,
+   "ok": true,
+   "warnings": [],
+   "key": "n:15rjbl1",
+   "hashes": [
+    "bd278cb007135c7695696ed112f58bb1916e3d203f0e26b972cb3d41aa1c6140"
+   ]
+  },
+  {
+   "invoiceDate": "2025-07-14",
+   "dueDate": "2025-08-04",
+   "periodStart": "2025-06-01",
+   "periodEnd": "2025-06-30",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 161,
+   "potenza": null,
+   "annualKwh": 1817,
+   "bands": null,
+   "costs": {
+    "energia": 30.74,
+    "energiaFissa": 8.11,
+    "trasporto": 10.39,
+    "oneri": 5.04,
+    "accise": 0,
+    "iva": 4.62,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 50.79,
+   "totaleDaPagare": 59.79,
+   "ok": true,
+   "warnings": [],
+   "key": "n:b3q8lt",
+   "hashes": [
+    "265895fef7469ee6451f20ff5f36cfff832a6c42fbc4f8500488fa88c63e55cb"
+   ]
+  },
+  {
+   "invoiceDate": "2025-08-07",
+   "dueDate": "2025-08-27",
+   "periodStart": "2025-07-01",
+   "periodEnd": "2025-07-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 99,
+   "potenza": null,
+   "annualKwh": 1781,
+   "bands": {
+    "f1": 41,
+    "f2": 22,
+    "f3": 36,
+    "from": "2025-06-30",
+    "to": "2025-07-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 25.21,
+    "energiaFissa": 8.1,
+    "trasporto": 9.56,
+    "oneri": 3.1,
+    "accise": 0,
+    "iva": 3.79,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 41.66,
+   "totaleDaPagare": 50.66,
+   "ok": true,
+   "warnings": [],
+   "key": "n:l0tplj",
+   "hashes": [
+    "4a5e485637f0fcb6eb9271a263f8a9f410755d715fba1c6a16d097a513892428"
+   ]
+  },
+  {
+   "invoiceDate": "2025-09-07",
+   "dueDate": "2025-09-29",
+   "periodStart": "2025-08-01",
+   "periodEnd": "2025-08-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 86,
+   "potenza": null,
+   "annualKwh": 1754,
+   "bands": {
+    "f1": 29,
+    "f2": 21,
+    "f3": 36,
+    "from": "2025-07-31",
+    "to": "2025-08-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 21.68,
+    "energiaFissa": 8.1,
+    "trasporto": 9.38,
+    "oneri": 2.69,
+    "accise": 0,
+    "iva": 3.38,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 37.13,
+   "totaleDaPagare": 46.13,
+   "ok": true,
+   "warnings": [],
+   "key": "n:h2a1",
+   "hashes": [
+    "c4cad4acf51bcf9fa5413e20f88dc774d0eaf9b0c0fa85c9e7c41df7c7f10d1a"
+   ]
+  },
+  {
+   "invoiceDate": "2025-10-08",
+   "dueDate": "2025-10-28",
+   "periodStart": "2025-09-01",
+   "periodEnd": "2025-09-30",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 133,
+   "potenza": null,
+   "annualKwh": 1777,
+   "bands": {
+    "f1": 61,
+    "f2": 37,
+    "f3": 35,
+    "from": "2025-08-31",
+    "to": "2025-09-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 28.74,
+    "energiaFissa": 8.1,
+    "trasporto": 10.02,
+    "oneri": 4.17,
+    "accise": 0,
+    "iva": 4.29,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 47.22,
+   "totaleDaPagare": 56.22,
+   "ok": true,
+   "warnings": [],
+   "key": "n:1640kwf",
+   "hashes": [
+    "1877a1ffef92ba0e32d9a14a855851bd24a404b50cdd68af675bfbee5674b7f8"
+   ]
+  },
+  {
+   "invoiceDate": "2025-11-06",
+   "dueDate": "2025-11-26",
+   "periodStart": "2025-10-01",
+   "periodEnd": "2025-10-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 155,
+   "potenza": null,
+   "annualKwh": 1796,
+   "bands": {
+    "f1": 71,
+    "f2": 47,
+    "f3": 37,
+    "from": "2025-09-30",
+    "to": "2025-10-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 31.94,
+    "energiaFissa": 8.1,
+    "trasporto": 10.31,
+    "oneri": 4.85,
+    "accise": 0.11,
+    "iva": 4.72,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 51.93,
+   "totaleDaPagare": 60.93,
+   "ok": true,
+   "warnings": [],
+   "key": "n:7xcotg",
+   "hashes": [
+    "157000b3b0b7971560af1e158c532a637d91d801c54e788612afa422cf5c1400",
+    "157000b3b0b7971560af1e158c532a637d91d801c54e788612afa422cf5c1400"
+   ]
+  },
+  {
+   "invoiceDate": "2025-12-17",
+   "dueDate": "2026-01-07",
+   "periodStart": "2025-11-01",
+   "periodEnd": "2025-11-30",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 172,
+   "potenza": null,
+   "annualKwh": 1761,
+   "bands": {
+    "f1": 72,
+    "f2": 50,
+    "f3": 50,
+    "from": "2025-10-31",
+    "to": "2025-11-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 34.76,
+    "energiaFissa": 8.1,
+    "trasporto": 10.55,
+    "oneri": 5.38,
+    "accise": 0.5,
+    "iva": 5.12,
+    "canone": 0,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 56.31,
+   "totaleDaPagare": 56.31,
+   "ok": true,
+   "warnings": [],
+   "key": "n:sgmelq",
+   "hashes": [
+    "68cc65263ddbd78f7e21db93984f84e89752182ae87580a291e613b3bbe5954c"
+   ]
+  },
+  {
+   "invoiceDate": "2026-01-10",
+   "dueDate": "2026-01-30",
+   "periodStart": "2025-12-01",
+   "periodEnd": "2025-12-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 157,
+   "potenza": null,
+   "annualKwh": 1721,
+   "bands": {
+    "f1": 55,
+    "f2": 43,
+    "f3": 59,
+    "from": "2025-11-30",
+    "to": "2025-12-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 33.33,
+    "energiaFissa": 8.1,
+    "trasporto": 10.34,
+    "oneri": 4.92,
+    "accise": 0.16,
+    "iva": 4.88,
+    "canone": 0,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 53.63,
+   "totaleDaPagare": 53.63,
+   "ok": true,
+   "warnings": [],
+   "key": "n:aq56kt",
+   "hashes": [
+    "05f5d996daf3a61de2964007399c11fe16bc7859bd0d54cef923343303a15c53"
+   ]
+  },
+  {
+   "invoiceDate": "2026-02-15",
+   "dueDate": "2026-03-09",
+   "periodStart": "2026-01-01",
+   "periodEnd": "2026-01-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 204,
+   "potenza": null,
+   "annualKwh": 1769,
+   "bands": {
+    "f1": 83,
+    "f2": 61,
+    "f3": 60,
+    "from": "2025-12-31",
+    "to": "2026-01-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 41.71,
+    "energiaFissa": 8.1,
+    "trasporto": 10.85,
+    "oneri": 6.18,
+    "accise": 1.23,
+    "iva": 6,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 65.97,
+   "totaleDaPagare": 74.97,
+   "ok": true,
+   "warnings": [],
+   "key": "n:9w6dhw",
+   "hashes": [
+    "d398ad88485f9e3f06a144a7640e96c63725e5a7f8f83f5b4fe7cc234f47bfa0"
+   ]
+  },
+  {
+   "invoiceDate": "2026-03-06",
+   "dueDate": "2026-03-26",
+   "periodStart": "2026-02-01",
+   "periodEnd": "2026-02-28",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 163,
+   "potenza": null,
+   "annualKwh": 1732,
+   "bands": {
+    "f1": 67,
+    "f2": 53,
+    "f3": 43,
+    "from": "2026-01-31",
+    "to": "2026-02-28",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 34.63,
+    "energiaFissa": 8.1,
+    "trasporto": 10.25,
+    "oneri": 4.94,
+    "accise": 0.3,
+    "iva": 5.01,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 55.13,
+   "totaleDaPagare": 64.13,
+   "ok": true,
+   "warnings": [],
+   "key": "n:a65z6v",
+   "hashes": [
+    "345d9baaca03c5c4abae375f4100742bde47b42dbdc664d8bc97dc021b558f65"
+   ]
+  },
+  {
+   "invoiceDate": "2026-04-09",
+   "dueDate": "2026-04-29",
+   "periodStart": "2026-03-01",
+   "periodEnd": "2026-03-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 153,
+   "potenza": null,
+   "annualKwh": 1655,
+   "bands": {
+    "f1": 62,
+    "f2": 49,
+    "f3": 42,
+    "from": "2026-02-28",
+    "to": "2026-03-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 32.09,
+    "energiaFissa": 8.1,
+    "trasporto": 10.1,
+    "oneri": 4.63,
+    "accise": 0.07,
+    "iva": 4.69,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 51.58,
+   "totaleDaPagare": 60.58,
+   "ok": true,
+   "warnings": [],
+   "key": "n:9c763y",
+   "hashes": [
+    "ca239a09f11161a4ed9f8e6dcec01af6a848c7e769a4d05ef95828f015575b9b"
+   ]
+  },
+  {
+   "invoiceDate": "2026-05-13",
+   "dueDate": "2026-06-03",
+   "periodStart": "2026-04-01",
+   "periodEnd": "2026-04-30",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 118,
+   "potenza": null,
+   "annualKwh": 1641,
+   "bands": {
+    "f1": 47,
+    "f2": 32,
+    "f3": 39,
+    "from": "2026-03-31",
+    "to": "2026-04-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 26.34,
+    "energiaFissa": 8,
+    "trasporto": 9.59,
+    "oneri": 3.57,
+    "accise": 0,
+    "iva": 3.95,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 43.45,
+   "totaleDaPagare": 52.45,
+   "ok": true,
+   "warnings": [],
+   "key": "n:9m6rsx",
+   "hashes": [
+    "c9f6d98f2c3831a8f6ccf97ad6428c40a32b561ad83fa2b474471be9627c16a0"
+   ]
+  },
+  {
+   "invoiceDate": "2026-06-05",
+   "dueDate": "2026-06-25",
+   "periodStart": "2026-05-01",
+   "periodEnd": "2026-05-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 158,
+   "potenza": null,
+   "annualKwh": 1643,
+   "bands": {
+    "f1": 69,
+    "f2": 44,
+    "f3": 45,
+    "from": "2026-04-30",
+    "to": "2026-05-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 32.55,
+    "energiaFissa": 8,
+    "trasporto": 10.18,
+    "oneri": 4.79,
+    "accise": 0.18,
+    "iva": 4.77,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 52.47,
+   "totaleDaPagare": 61.47,
+   "ok": true,
+   "warnings": [],
+   "key": "n:8s7yq0",
+   "hashes": [
+    "a66248ec58b0bf4a6d1b72ddaa7534b4d8e4d2f1889cffaea5f74bafc80a6640"
+   ]
+  },
+  {
+   "invoiceDate": "2026-07-05",
+   "dueDate": "2026-07-27",
+   "periodStart": "2026-06-01",
+   "periodEnd": "2026-06-21",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Fissa 12M v94",
+   "priceType": "fisso",
+   "kwh": 123,
+   "potenza": null,
+   "annualKwh": 1721,
+   "bands": {
+    "f1": 45,
+    "f2": 37,
+    "f3": 41,
+    "from": "2026-05-31",
+    "to": "2026-06-21",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 25.07,
+    "energiaFissa": 5.6,
+    "trasporto": 7.3,
+    "oneri": 3.72,
+    "accise": 0,
+    "iva": 3.61,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 39.7,
+   "totaleDaPagare": 48.7,
+   "ok": true,
+   "warnings": [],
+   "key": "n:927kez",
+   "hashes": [
+    "7df66b9565b773cc2f3767c975ebd31ec64a3c86cfbde4255348626515dcfd55"
+   ]
+  },
+  {
+   "invoiceDate": "2026-07-16",
+   "dueDate": "2026-08-05",
+   "periodStart": "2026-06-22",
+   "periodEnd": "2026-06-30",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Flex v95",
+   "priceType": "variabile",
+   "kwh": 87,
+   "potenza": null,
+   "annualKwh": 1685,
+   "bands": {
+    "f1": 41,
+    "f2": 19,
+    "f3": 27,
+    "from": "2026-06-21",
+    "to": "2026-06-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 16.96,
+    "energiaFissa": 1.8,
+    "trasporto": 3.64,
+    "oneri": 2.63,
+    "accise": 0,
+    "iva": 2.32,
+    "canone": 0,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 25.55,
+   "totaleDaPagare": 25.55,
+   "ok": true,
+   "warnings": [],
+   "key": "n:888rc2",
+   "hashes": [
+    "3dc7dd8f0f848ea6f7c0a1fdae0c3f14497cc8f9a6af1572876b1af0447af043"
+   ]
+  },
+  {
+   "invoiceDate": "2026-08-06",
+   "dueDate": "2026-08-26",
+   "periodStart": "2026-07-01",
+   "periodEnd": "2026-07-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Flex v95",
+   "priceType": "variabile",
+   "kwh": 107,
+   "potenza": null,
+   "annualKwh": 1693,
+   "bands": {
+    "f1": 45,
+    "f2": 22,
+    "f3": 40,
+    "from": "2026-06-30",
+    "to": "2026-07-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 29.53,
+    "energiaFissa": 6,
+    "trasporto": 9.43,
+    "oneri": 3.55,
+    "accise": 0,
+    "iva": 4.25,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 46.76,
+   "totaleDaPagare": 55.76,
+   "ok": true,
+   "warnings": [],
+   "key": "n:8i8d11",
+   "hashes": [
+    "ccc56ebde7acab53cddc8c151ebe9e5a8415f98929a50d89e7b4569e38342d25",
+    "ccc56ebde7acab53cddc8c151ebe9e5a8415f98929a50d89e7b4569e38342d25"
+   ]
+  },
+  {
+   "invoiceDate": "2026-09-06",
+   "dueDate": "2026-09-28",
+   "periodStart": "2026-08-01",
+   "periodEnd": "2026-08-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Flex v95",
+   "priceType": "variabile",
+   "kwh": 68,
+   "potenza": null,
+   "annualKwh": 1668,
+   "bands": {
+    "f1": 21,
+    "f2": 13,
+    "f3": 27,
+    "from": "2026-07-31",
+    "to": "2026-08-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 19.9,
+    "energiaFissa": 6,
+    "trasporto": 8.75,
+    "oneri": 2.02,
+    "accise": 0,
+    "iva": 3.07,
+    "canone": 9,
+    "altrePartite": -1,
+    "altro": 0
+   },
+   "totaleBolletta": 33.74,
+   "totaleDaPagare": 41.74,
+   "ok": true,
+   "warnings": [],
+   "key": "n:12r474z",
+   "hashes": [
+    "462747df92031368da1fb47b88d7c58ce7cc394f33e775bf4969f67426879ba0",
+    "462747df92031368da1fb47b88d7c58ce7cc394f33e775bf4969f67426879ba0"
+   ]
+  },
+  {
+   "invoiceDate": "2026-10-10",
+   "dueDate": "2026-10-30",
+   "periodStart": "2026-09-01",
+   "periodEnd": "2026-09-30",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Flex v95",
+   "priceType": "variabile",
+   "kwh": 127,
+   "potenza": null,
+   "annualKwh": 1662,
+   "bands": {
+    "f1": 51,
+    "f2": 37,
+    "f3": 39,
+    "from": "2026-08-31",
+    "to": "2026-09-30",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 38.32,
+    "energiaFissa": 6,
+    "trasporto": 9.72,
+    "oneri": 4.21,
+    "accise": 0,
+    "iva": 5.23,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 57.48,
+   "totaleDaPagare": 66.48,
+   "ok": true,
+   "warnings": [],
+   "key": "n:12h4lg0",
+   "hashes": [
+    "d9da72acc749d75c7cf84951456dd0008e540b842f63ca13aaed5083496c522a",
+    "d9da72acc749d75c7cf84951456dd0008e540b842f63ca13aaed5083496c522a",
+    "d9da72acc749d75c7cf84951456dd0008e540b842f63ca13aaed5083496c522a",
+    "d9da72acc749d75c7cf84951456dd0008e540b842f63ca13aaed5083496c522a"
+   ]
+  },
+  {
+   "invoiceDate": "2026-11-07",
+   "dueDate": "2026-11-27",
+   "periodStart": "2026-10-01",
+   "periodEnd": "2026-10-31",
+   "supplier": "Octopus Energy",
+   "format": "scontrino",
+   "offer": "Octopus Flex v95",
+   "priceType": "variabile",
+   "kwh": 166,
+   "potenza": null,
+   "annualKwh": 1673,
+   "bands": {
+    "f1": 63,
+    "f2": 60,
+    "f3": 43,
+    "from": "2026-09-30",
+    "to": "2026-10-31",
+    "estimated": false
+   },
+   "costs": {
+    "energia": 52.92,
+    "energiaFissa": 6,
+    "trasporto": 10.3,
+    "oneri": 5.5,
+    "accise": 0.36,
+    "iva": 6.91,
+    "canone": 9,
+    "altrePartite": 0,
+    "altro": 0
+   },
+   "totaleBolletta": 75.99,
+   "totaleDaPagare": 84.99,
+   "ok": true,
+   "warnings": [],
+   "key": "n:13b3eix",
+   "hashes": [
+    "031f1970c2439f35dba1c41e00db6fa9eb2633d846cace222c98e9b05969f435"
+   ]
+  }
+ ]
+}

@@ -57,6 +57,14 @@ function load() {
     const raw = JSON.parse(localStorage.getItem(STORE) || 'null');
     if (raw) { bills = raw.bills || []; hidden = new Set(raw.hidden || []); }
   } catch { /* storage non disponibile */ }
+  // ricalcola le chiavi (formato cambiato) e rimuovi eventuali doppioni
+  const seen = new Set();
+  bills = bills.filter((b) => {
+    if (b.invoiceNo) b.key = billKey(b);
+    if (seen.has(b.key)) return false;
+    seen.add(b.key);
+    return true;
+  });
 }
 function save() {
   try { localStorage.setItem(STORE, JSON.stringify({ version: 1, bills, hidden: [...hidden] })); } catch { /* ignora */ }
@@ -490,7 +498,7 @@ function renderBills(list, months) {
     const bands = b.bands ? `${b.bands.f1}/${b.bands.f2}/${b.bands.f3}` : '—';
     return `<tr>
       <td>${dShort(b.periodStart)} – ${dShort(b.periodEnd)}</td>
-      <td class="l muted">${esc(b.invoiceNo || '')}</td>
+      <td class="l muted">${esc(b.invoiceNo || '—')}</td>
       <td class="l">${esc(b.offer || '—')}</td><td class="l">${badge(b.priceType)}</td>
       <td>${b.kwh ?? '—'}</td><td class="muted">${bands}</td>
       <td>${fE(c.energia)}</td><td>${fE(c.trasporto)}</td><td>${fE(c.oneri)}</td><td>${fE(c.accise)}</td><td>${fE(c.iva)}</td>

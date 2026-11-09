@@ -13,29 +13,33 @@ Pagina statica che legge i PDF delle bollette della luce **direttamente nel brow
 I duplicati vengono scartati (stesso file oppure stesso numero di fattura), quindi puoi ricaricare
 tutta la cartella ogni volta che arriva una bolletta nuova.
 
-## Privacy
+## Dove stanno i dati
 
-- I PDF non vengono caricati su nessun server: li legge [pdf.js](https://mozilla.github.io/pdf.js/) nel tuo browser.
-- Vengono salvati solo i numeri estratti, nel `localStorage` di quel browser. Nome, codice fiscale e indirizzo non vengono salvati.
-- Pubblicare la pagina **non** pubblica le tue bollette: chi la apre vede una dashboard vuota finché non carica i propri PDF.
-- `.gitignore` esclude `data/` e tutti i `*.pdf`, così le bollette non finiscono nel repository.
+I PDF vanno nella cartella `data/`. Da lì `node tools/build-data.mjs` (oppure `npm run dati`) genera
+`docs/bollette.json`, che la pagina carica all'avvio **in qualsiasi browser e su qualsiasi dispositivo**.
+Nel JSON ci sono solo i numeri della bolletta: niente nome, codice fiscale, indirizzo, POD o numero fattura.
 
-Per avere i dati su un altro dispositivo: **Esporta dati** → sull'altro dispositivo **Importa dati**.
-In alternativa puoi mettere il file esportato in `docs/bollette.json`: la pagina lo carica da sola all'avvio
-(ma a quel punto chiunque abbia il link vede importi e consumi; nessun dato anagrafico).
+Su GitHub il workflow `.github/workflows/pages.yml` fa la stessa cosa a ogni push: legge i PDF in `data/`,
+rigenera `bollette.json` e ripubblica la pagina. Se in `data/` non ci sono PDF usa il `bollette.json` già presente.
 
-## Pubblicarla gratis
+Puoi anche caricare un PDF direttamente nella pagina: viene letto nel browser e aggiunto, ma resta solo
+in quel browser. Per renderlo visibile ovunque va messo in `data/`.
 
-La pagina è tutta in `docs/` (HTML + CSS + JS, nessuna build).
+**Attenzione:** i PDF contengono nome, codice fiscale, indirizzo e POD. Se il repository è pubblico,
+i PDF in `data/` sono scaricabili da chiunque. Per questo `.gitignore` li esclude finché non decidi diversamente.
 
-**GitHub Pages**
-1. Crea un repository su GitHub e fai push (i PDF sono già esclusi).
-2. Settings → Pages → *Deploy from a branch* → branch `main`, cartella `/docs` → Save.
-3. Dopo un minuto è online su `https://<utente>.github.io/<repo>/`.
+## Pubblicazione
 
-**Netlify Drop** (senza git): apri <https://app.netlify.com/drop> e trascina la cartella `docs`.
+**GitHub Pages** (repository pubblico, gratis)
+```bash
+gh repo create <utente>/costi-elettricita --public --source . --remote origin --push
+gh api -X POST repos/<utente>/costi-elettricita/pages -f build_type=workflow
+```
+Nuova bolletta: mettila in `data/`, poi `npm run dati` e commit + push di `docs/bollette.json`.
 
-**Cloudflare Pages**: Workers & Pages → Create → Pages → *Upload assets* → carica la cartella `docs`.
+**Cloudflare Pages** (repository privato con i PDF dentro, gratis): collega il repository da
+Workers & Pages → Create → Pages → *Connect to Git*, con build command `npm ci && node tools/build-data.mjs data`
+e output directory `docs`. Viene pubblicata solo `docs/`, non i PDF.
 
 ## Sviluppo locale
 

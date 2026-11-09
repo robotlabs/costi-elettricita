@@ -233,6 +233,12 @@ export function parseBill(text) {
 
 /** Chiave per riconoscere i duplicati: numero fattura, altrimenti periodo + totale. */
 export function billKey(b) {
-  if (b.invoiceNo) return 'n:' + b.invoiceNo.replace(/[-\s]/g, '').toUpperCase();
+  if (b.invoiceNo) return 'n:' + fnv1a(b.invoiceNo.replace(/[-\s]/g, '').toUpperCase());
   return `p:${b.periodStart}_${b.periodEnd}_${b.totaleDaPagare}`;
+}
+// hash del numero fattura: così bollette.json non deve contenere il numero (che include il codice fornitura)
+function fnv1a(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return h.toString(36);
 }
