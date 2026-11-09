@@ -20,7 +20,7 @@ Online: https://robotlabs.github.io/costi-elettricita/
    npm run deploy
    ```
    Legge tutti i PDF, aggiorna `docs/bollette.json`, fa commit e push di quel solo file.
-3. GitHub Actions ripubblica la pagina in circa un minuto.
+3. GitHub Pages ripubblica la cartella `docs/` in circa un minuto.
 
 ## Dove stanno i dati
 

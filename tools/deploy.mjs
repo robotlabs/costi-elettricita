@@ -1,5 +1,5 @@
 // npm run deploy — legge i PDF in data/, aggiorna docs/bollette.json, fa commit e push.
-// GitHub Actions poi pubblica la pagina su GitHub Pages (circa un minuto).
+// GitHub Pages (branch main, cartella /docs) ripubblica la pagina in circa un minuto.
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
