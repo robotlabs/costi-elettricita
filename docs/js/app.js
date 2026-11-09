@@ -1,5 +1,5 @@
 // Dashboard di sola lettura: i dati arrivano da bollette.json, generato dai PDF con `npm run deploy`.
-import { stackedColumns, lineChart, columnPanels, hideTip } from './charts.js';
+import { stackedColumns, lineChart, columnPanels, hideTip } from './charts.js?v=202611090908';
 
 const COST_SERIES = [
   { id: 'energia', label: 'Energia (vendita)', color: 'var(--c1)', ink: '#fff', hint: 'materia prima + quota fissa del fornitore' },
