@@ -1,0 +1,12 @@
+{
+  "name": "costi-elettricita",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/serve.mjs",
+    "test": "node tools/parse-all.mjs data"
+  },
+  "devDependencies": {
+    "pdfjs-dist": "4.4.168"
+  }
+}

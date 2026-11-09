@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bollette luce</title>
+  <meta name="description" content="Analisi delle bollette della luce: costi, consumi e tariffa, dai PDF letti direttamente nel browser.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M18 2 6 18h8l-2 12 12-16h-8z' fill='%23eda100'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <div>
+        <h1>Bollette luce</h1>
+        <p class="sub" id="supplyInfo">Carica i PDF delle bollette per iniziare.</p>
+      </div>
+      <div class="actions">
+        <label class="btn primary">
+          <input type="file" id="fileInput" accept="application/pdf,.pdf" multiple hidden>
+          Carica PDF
+        </label>
+        <button class="btn" id="exportBtn" type="button">Esporta dati</button>
+        <label class="btn">
+          <input type="file" id="importInput" accept="application/json,.json" hidden>
+          Importa dati
+        </label>
+        <button class="btn ghost" id="clearBtn" type="button">Svuota</button>
+      </div>
+    </header>
+
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+
+    <section id="empty" class="empty">
+      <div class="drop">
+        <p class="drop-title">Trascina qui i PDF delle bollette</p>
+        <p class="muted">oppure usa <strong>Carica PDF</strong>. Puoi caricarne quanti vuoi, anche più volte: i duplicati vengono scartati.</p>
+        <p class="muted small">I file vengono letti nel tuo browser e non lasciano mai il tuo computer. Restano salvati solo i numeri estratti (in questo browser).</p>
+      </div>
+    </section>
+
+    <main id="dash" hidden>
+      <nav class="filters" aria-label="Periodo">
+        <span class="muted small">Periodo</span>
+        <div class="seg" id="rangeSeg" role="group"></div>
+      </nav>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Consumi e costo, mese per mese</h2>
+            <p class="muted small">Sopra quanti kWh hai consumato, sotto quanto hai pagato (canone RAI incluso). Stessi mesi, una scala per grafico. Passa sopra un mese per vedere entrambi i valori.</p>
+          </div>
+          <div class="legend" id="mainLegend"></div>
+        </div>
+        <div class="chart" id="mainChart"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Costo e tipo di contratto</h2>
+            <p class="muted small">Quanto ti è costato ogni kWh (tutta la bolletta, canone escluso) col prezzo fisso e col variabile. La linea nera è la media del periodo.</p>
+          </div>
+          <div class="legend" id="contractLegend"></div>
+        </div>
+        <div class="chart" id="contractChart"></div>
+        <div id="compare" style="margin-top:16px"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Prezzo della sola energia per kWh</h2>
+            <p class="muted small">La materia prima pagata al fornitore per ogni kWh, senza rete, oneri, quota fissa, tasse e IVA.</p>
+          </div>
+          <div class="legend" id="priceLegend"></div>
+        </div>
+        <div class="chart" id="priceChart"></div>
+      </section>
+
+      <h2 class="section-title">Riepilogo</h2>
+      <section class="kpis" id="kpis"></section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Voci di costo ogni mese</h2>
+            <p class="muted small">Totale da pagare, diviso per voce. Sopra il grafico: l'offerta attiva in quel periodo.</p>
+          </div>
+          <div class="legend" id="costLegend"></div>
+        </div>
+        <div class="chart" id="costChart"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Dove vanno i soldi</h2>
+            <p class="muted small" id="compoSub"></p>
+          </div>
+        </div>
+        <div id="compo"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Consumi per fascia oraria</h2>
+            <p class="muted small">kWh dalle letture del contatore. F1: giorni feriali 8–19 · F2: feriali 7–8 e 19–23, sabato 7–23 · F3: notte, domenica e festivi.</p>
+          </div>
+          <div class="legend" id="kwhLegend"></div>
+        </div>
+        <div class="chart" id="kwhChart"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h2>Anno per anno</h2></div>
+        <div class="table-wrap"><table id="yearTable" class="tbl"></table></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Bollette caricate</h2>
+            <p class="muted small" id="billsSub"></p>
+          </div>
+        </div>
+        <div class="table-wrap"><table id="billTable" class="tbl"></table></div>
+      </section>
+
+      <footer class="foot muted small">
+        I PDF sono letti localmente con pdf.js; i dati estratti restano nel <em>localStorage</em> di questo browser.
+        Usa <strong>Esporta dati</strong> per un backup o per spostarli su un altro dispositivo.
+      </footer>
+    </main>
+  </div>
+
+  <div id="tip" class="tip" role="tooltip" hidden></div>
+  <div id="dropOverlay" class="drop-overlay" hidden><div>Rilascia i PDF per aggiungerli</div></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Le bollette contengono dati personali: non pubblicarle mai
+data/
+*.pdf
+node_modules/
+.DS_Store
