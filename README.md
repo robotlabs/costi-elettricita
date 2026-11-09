@@ -19,7 +19,8 @@ Online: https://robotlabs.github.io/costi-elettricita/
    ```bash
    npm run deploy
    ```
-   Legge tutti i PDF, aggiorna `docs/bollette.json`, fa commit e push di quel solo file.
+   Legge tutti i PDF, aggiorna `docs/bollette.json`, fa commit e push di tutte le modifiche (dati e pagina).
+   Si ferma se sta per pubblicare un PDF.
 3. GitHub Pages ripubblica la cartella `docs/` in circa un minuto.
 
 ## Dove stanno i dati
@@ -37,7 +38,7 @@ npm install          # una volta sola (serve pdfjs-dist per leggere i PDF)
 npm run dev          # anteprima su http://127.0.0.1:5173 (se occupata usa la porta libera successiva)
 npm test             # stampa cosa estrae il parser da ogni PDF in data/
 npm run dati         # aggiorna docs/bollette.json senza pubblicare
-npm run deploy       # aggiorna docs/bollette.json, commit e push
+npm run deploy       # aggiorna i dati e pubblica tutto (commit + push)
 ```
 
 ## Formati supportati
