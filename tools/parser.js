@@ -1,5 +1,5 @@
 // Estrazione testo da PDF (pdf.js) + parser bollette luce.
-// Funziona sia nel browser sia in Node (tools/parse-all.mjs), così il parser è testabile.
+// Usato da tools/build-data.mjs (npm run deploy) e tools/parse-all.mjs (npm test).
 
 /** Ricostruisce le righe di testo di un PDF raggruppando i frammenti per coordinata Y. */
 export async function pdfToText(pdfjsLib, data) {

@@ -4,7 +4,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
-import { pdfToText, parseBill, billKey } from '../docs/js/parser.js';
+import { pdfToText, parseBill, billKey } from './parser.js';
 
 const args = process.argv.slice(2);
 const dir = args.find((a) => !a.startsWith('--')) || 'data';

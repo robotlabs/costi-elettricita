@@ -1,9 +1,5 @@
-import { pdfToText, parseBill, billKey } from './parser.js';
+// Dashboard di sola lettura: i dati arrivano da bollette.json, generato dai PDF con `npm run deploy`.
 import { stackedColumns, lineChart, columnPanels, hideTip } from './charts.js';
-
-const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
-const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
-const STORE = 'bollette-luce.v1';
 
 const COST_SERIES = [
   { id: 'energia', label: 'Energia (vendita)', color: 'var(--c1)', ink: '#fff', hint: 'materia prima + quota fissa del fornitore' },
@@ -49,88 +45,7 @@ const days = (b) => (b.periodStart && b.periodEnd ? (new Date(b.periodEnd) - new
 
 // ---------- stato ----------
 let bills = [];
-let hidden = new Set();
 let range = 'all'; // periodo predefinito: tutti i mesi
-
-function load() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(STORE) || 'null');
-    if (raw) { bills = raw.bills || []; hidden = new Set(raw.hidden || []); }
-  } catch { /* storage non disponibile */ }
-  // ricalcola le chiavi (formato cambiato) e rimuovi eventuali doppioni
-  const seen = new Set();
-  bills = bills.filter((b) => {
-    if (b.invoiceNo) b.key = billKey(b);
-    if (seen.has(b.key)) return false;
-    seen.add(b.key);
-    return true;
-  });
-}
-function save() {
-  try { localStorage.setItem(STORE, JSON.stringify({ version: 1, bills, hidden: [...hidden] })); } catch { /* ignora */ }
-}
-function merge(list, source) {
-  let added = 0, dup = 0;
-  for (const b of list) {
-    if (!b || !b.costs) continue;
-    const key = b.key || billKey(b);
-    if (hidden.has(key) && source === 'file') continue;
-    if (bills.some((x) => x.key === key)) { dup++; continue; }
-    bills.push({ ...b, key, source: b.source || source });
-    added++;
-  }
-  return { added, dup };
-}
-
-// ---------- caricamento PDF ----------
-let pdfjsPromise;
-function loadPdfjs() {
-  pdfjsPromise ||= import(PDFJS).then((lib) => { lib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER; return lib; });
-  return pdfjsPromise;
-}
-async function sha256(buf) {
-  const h = await crypto.subtle.digest('SHA-256', buf);
-  return [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function handleFiles(fileList) {
-  const files = [...fileList].filter((f) => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
-  if (!files.length) return status('<strong>Nessun PDF</strong> tra i file selezionati.');
-  status(`Lettura di ${files.length} PDF…`);
-  let lib;
-  try { lib = await loadPdfjs(); } catch (e) {
-    return status(`<strong>Impossibile caricare il lettore PDF.</strong> Serve una connessione a internet la prima volta. (${esc(e.message)})`);
-  }
-  const added = [], dups = [], failed = [], warned = [];
-  for (const [i, f] of files.entries()) {
-    status(`Lettura ${i + 1} di ${files.length}: ${esc(f.name)}`);
-    try {
-      const buf = await f.arrayBuffer();
-      const hash = await sha256(buf);
-      if (bills.some((b) => b.hashes?.includes(hash))) { dups.push(f.name); continue; }
-      const text = await pdfToText(lib, new Uint8Array(buf));
-      const bill = parseBill(text);
-      if (!bill.periodStart && bill.totaleDaPagare == null) { failed.push(f.name); continue; }
-      const key = billKey(bill);
-      const existing = bills.find((b) => b.key === key);
-      if (existing) { existing.hashes = [...new Set([...(existing.hashes || []), hash])]; dups.push(f.name); continue; }
-      hidden.delete(key);
-      bills.push({ ...bill, key, hashes: [hash], fileName: f.name, addedAt: new Date().toISOString(), source: 'pdf' });
-      added.push(f.name);
-      if (!bill.ok) warned.push(`${f.name}: ${bill.warnings.join(', ')}`);
-    } catch (e) {
-      console.error(f.name, e);
-      failed.push(f.name);
-    }
-  }
-  save();
-  render();
-  let msg = `<strong>${added.length} ${added.length === 1 ? 'bolletta aggiunta' : 'bollette aggiunte'}</strong>`;
-  if (dups.length) msg += ` · ${dups.length} ${dups.length === 1 ? 'duplicato scartato' : 'duplicati scartati'}`;
-  if (failed.length) msg += ` · ${failed.length} non ${failed.length === 1 ? 'riconosciuta' : 'riconosciute'}<ul>${failed.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>`;
-  if (warned.length) msg += `<br>Da controllare:<ul>${warned.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>`;
-  status(msg);
-}
 
 function status(html) {
   const el = $('status');
@@ -218,7 +133,7 @@ function render() {
   const has = bills.length > 0;
   $('empty').hidden = has;
   $('dash').hidden = !has;
-  if (!has) { $('supplyInfo').textContent = 'Carica i PDF delle bollette per iniziare.'; return; }
+  if (!has) { $('supplyInfo').textContent = 'Nessuna bolletta ancora.'; return; }
 
   const years = [...new Set(bills.map((b) => monthOf(b).slice(0, 4)).filter(Boolean))].sort();
   if (range !== 'all' && range !== 'last12' && !years.includes(range)) range = 'all';
@@ -498,78 +413,26 @@ function renderBills(list, months) {
     const bands = b.bands ? `${b.bands.f1}/${b.bands.f2}/${b.bands.f3}` : '—';
     return `<tr>
       <td>${dShort(b.periodStart)} – ${dShort(b.periodEnd)}</td>
-      <td class="l muted">${esc(b.invoiceNo || '—')}</td>
       <td class="l">${esc(b.offer || '—')}</td><td class="l">${badge(b.priceType)}</td>
       <td>${b.kwh ?? '—'}</td><td class="muted">${bands}</td>
       <td>${fE(c.energia)}</td><td>${fE(c.trasporto)}</td><td>${fE(c.oneri)}</td><td>${fE(c.accise)}</td><td>${fE(c.iva)}</td>
       <td>${fE(c.canone)}</td><td>${Math.abs(altre(b)) > 0.004 ? fE(altre(b)) : '—'}</td>
       <td class="strong">${fE(b.totaleDaPagare)}</td><td>${fP(b.kwh ? b.totaleBolletta / b.kwh : null)}</td>
       <td>${check}</td>
-      <td><button class="del" type="button" data-key="${esc(b.key)}" title="Rimuovi questa bolletta" aria-label="Rimuovi bolletta ${esc(b.invoiceNo || '')}">×</button></td>
     </tr>`;
   }).join('');
-  $('billTable').innerHTML = `<thead><tr><th>Periodo</th><th class="l">Fattura</th><th class="l">Offerta</th><th class="l">Tipo</th><th>kWh</th><th>F1/F2/F3</th>
-    <th>Energia</th><th>Trasporto</th><th>Oneri</th><th>Accise</th><th>IVA</th><th>Canone</th><th>Altre</th><th>Totale</th><th>€/kWh</th><th></th><th></th></tr></thead>
+  $('billTable').innerHTML = `<thead><tr><th>Periodo</th><th class="l">Offerta</th><th class="l">Tipo</th><th>kWh</th><th>F1/F2/F3</th>
+    <th>Energia</th><th>Trasporto</th><th>Oneri</th><th>Accise</th><th>IVA</th><th>Canone</th><th>Altre</th><th>Totale</th><th>€/kWh</th><th></th></tr></thead>
     <tbody>${rows}</tbody>
-    <tfoot><tr><td colspan="4">Totale</td><td>${int.format(sum(list, (b) => b.kwh))}</td><td></td>
+    <tfoot><tr><td colspan="3">Totale</td><td>${int.format(sum(list, (b) => b.kwh))}</td><td></td>
       ${['energia', 'trasporto', 'oneri', 'accise', 'iva', 'canone'].map((k) => `<td>${fE(sum(list, (b) => b.costs[k]))}</td>`).join('')}
-      <td>${fE(sum(list, altre))}</td><td>${fE(sum(list, (b) => b.totaleDaPagare))}</td><td colspan="3"></td></tr></tfoot>`;
+      <td>${fE(sum(list, altre))}</td><td>${fE(sum(list, (b) => b.totaleDaPagare))}</td><td colspan="2"></td></tr></tfoot>`;
 }
 
 // ---------- eventi ----------
-$('fileInput').addEventListener('change', (e) => { handleFiles(e.target.files); e.target.value = ''; });
 $('rangeSeg').addEventListener('click', (e) => {
   const v = e.target.closest('button')?.dataset.v;
   if (v) { range = v; render(); }
-});
-$('billTable').addEventListener('click', (e) => {
-  const key = e.target.closest('.del')?.dataset.key;
-  if (!key) return;
-  const b = bills.find((x) => x.key === key);
-  if (!b || !confirm(`Rimuovere la bolletta ${b.invoiceNo || ''} (${dShort(b.periodStart)} – ${dShort(b.periodEnd)})?`)) return;
-  bills = bills.filter((x) => x.key !== key);
-  hidden.add(key);
-  save(); render();
-});
-$('exportBtn').addEventListener('click', () => {
-  const data = { version: 1, exportedAt: new Date().toISOString(), bills: bills.map(({ source, ...b }) => b) };
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-  a.download = `bollette-luce-${new Date().toISOString().slice(0, 10)}.json`;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-});
-$('importInput').addEventListener('change', async (e) => {
-  const f = e.target.files[0];
-  e.target.value = '';
-  if (!f) return;
-  try {
-    const data = JSON.parse(await f.text());
-    const list = Array.isArray(data) ? data : data.bills || [];
-    for (const b of list) hidden.delete(b.key || billKey(b));
-    const { added, dup } = merge(list, 'import');
-    save(); render();
-    status(`<strong>${added} bollette importate</strong>${dup ? ` · ${dup} già presenti` : ''}`);
-  } catch (err) {
-    status(`<strong>File non valido.</strong> ${esc(err.message)}`);
-  }
-});
-$('clearBtn').addEventListener('click', () => {
-  if (!bills.length || !confirm('Cancellare tutte le bollette salvate in questo browser? Conviene prima fare "Esporta dati".')) return;
-  for (const b of bills) hidden.add(b.key);
-  bills = [];
-  save(); render(); status('');
-});
-
-// trascina e rilascia ovunque nella pagina
-let dragDepth = 0;
-window.addEventListener('dragenter', (e) => { if (e.dataTransfer?.types?.includes('Files')) { dragDepth++; $('dropOverlay').hidden = false; } });
-window.addEventListener('dragleave', () => { if (--dragDepth <= 0) { dragDepth = 0; $('dropOverlay').hidden = true; } });
-window.addEventListener('dragover', (e) => e.preventDefault());
-window.addEventListener('drop', (e) => {
-  e.preventDefault();
-  dragDepth = 0; $('dropOverlay').hidden = true;
-  if (e.dataTransfer?.files?.length) handleFiles(e.dataTransfer.files);
 });
 window.addEventListener('scroll', hideTip, { passive: true });
 
@@ -583,17 +446,17 @@ new ResizeObserver(([e]) => {
 }).observe(document.querySelector('.page'));
 
 // ---------- avvio ----------
-load();
-render();
-// Facoltativo: un file bollette.json accanto alla pagina (esportato con "Esporta dati") viene caricato all'avvio.
 fetch('bollette.json', { cache: 'no-store' })
-  .then((r) => (r.ok ? r.json() : null))
+  .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
   .then((data) => {
-    if (!data) return;
-    const { added } = merge(Array.isArray(data) ? data : data.bills || [], 'file');
-    if (added) { save(); render(); }
+    bills = (Array.isArray(data) ? data : data.bills || []).filter((b) => b && b.costs);
+    if (data.generatedAt) $('updated').textContent = `Dati aggiornati il ${new Date(data.generatedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}.`;
+    render();
   })
-  .catch(() => {});
+  .catch((e) => {
+    render();
+    status(`<strong>Impossibile leggere bollette.json.</strong> ${esc(e.message)}`);
+  });
 
-// per test/debug dalla console
-window.__bollette = { get bills() { return bills; }, handleFiles };
+// per debug dalla console
+window.__bollette = { get bills() { return bills; } };

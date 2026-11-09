@@ -1,6 +1,6 @@
-# A ogni push (anche caricando un PDF in data/ dal sito di GitHub):
-# legge i PDF, rigenera docs/bollette.json e pubblica la pagina su GitHub Pages.
-name: Pubblica bollette
+# Pubblica la cartella docs/ su GitHub Pages a ogni push su main.
+# I dati (docs/bollette.json) li genera `npm run deploy` sul tuo computer: i PDF non vanno mai su GitHub.
+name: Pubblica pagina
 
 on:
   push:
@@ -24,13 +24,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Leggi i PDF e genera i dati
-        run: node tools/build-data.mjs data
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
-import { pdfToText, parseBill, billKey } from '../docs/js/parser.js';
+import { pdfToText, parseBill, billKey } from './parser.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dir = path.resolve(root, process.argv[2] || 'data');
@@ -33,6 +33,11 @@ for (const f of files) {
 }
 
 const bills = [...byKey.values()].sort((a, b) => (a.periodStart || '').localeCompare(b.periodStart || ''));
+const prev = JSON.parse(await readFile(out, 'utf8').catch(() => 'null'));
+if (prev && JSON.stringify(prev.bills) === JSON.stringify(bills)) {
+  console.log(`${files.length} PDF → ${bills.length} bollette: nessuna novità, ${path.relative(root, out)} invariato.`);
+  process.exit(0);
+}
 await writeFile(out, JSON.stringify({ version: 1, generatedAt: new Date().toISOString(), bills }, null, 1) + '\n');
 console.log(`${files.length} PDF → ${bills.length} bollette uniche (${files.length - bills.length - failed.length} duplicati) → ${path.relative(root, out)}`);
 for (const w of bills.filter((b) => !b.ok)) console.log(`  ⚠ ${w.periodStart}: ${w.warnings.join('; ')}`);
