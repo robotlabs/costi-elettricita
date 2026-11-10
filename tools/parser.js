@@ -118,7 +118,7 @@ export function parseBill(text) {
   if (!priceType) warnings.push('tipo di prezzo non trovato');
 
   const kwh = num(first(t, /Consumo fatturato:?\s*([\d.]+)\s*kWh/i));
-  const potenza = num(first(t, /Potenza impegnata:?[^\n]*?([\d]+[.,]\d+|\d+)\s*kW/i));
+  const potenza = parseFloat((first(t, /Potenza impegnata:?[\s\S]{0,200}?(\d+(?:[.,]\d+)?)\s*kW\b/i) || '').replace(',', '.')) || null;
   const annualKwh = num(first(t, /([\d.]+)\s*kWh\/anno/i)) ?? num(first(t, /Consumo annuo:?\s*([\d.]+)\s*kWh/i));
 
   // Letture F1/F2/F3 → consumo per fascia (differenza tra le ultime due letture)
@@ -232,6 +232,10 @@ export function parseBill(text) {
     },
     totaleBolletta, totaleDaPagare, quotaConsumi,
     ivaRate: num(first(t, /IVA vendite\s*(\d+)\s*%/i)) ?? null,
+    // accise per kWh applicate in questa bolletta (0 se il consumo del mese è tutto esente)
+    acciseRate: Math.max(0, ...[...t.matchAll(/Imposta erariale[^\n]*?(\d+)\s*kWh\s*x\s*([\d,]+)\s*€\/kWh\s*=\s*([\d,]+)/gi)]
+      .filter((m) => num(m[3]) > 0).map((m) => num(m[2]))),
+    clientType: first(t, /TIPOLOGIA DI CLIENTE:?[ \t]*(Domestico (?:non )?Residente)/i) || first(t, /Tipologia Cliente:?[ \t]*(Domestico (?:non )?Residente)/i),
     ok: warnings.length === 0,
     warnings,
   };

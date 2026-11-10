@@ -1,5 +1,5 @@
 // Dashboard di sola lettura: i dati arrivano da bollette.json, generato dai PDF con `npm run deploy`.
-import { stackedColumns, lineChart, columnPanels, hideTip } from './charts.js?v=202611090908';
+import { stackedColumns, lineChart, columnPanels, hideTip } from './charts.js?v=202611100836';
 
 const COST_SERIES = [
   { id: 'energia', label: 'Energia (vendita)', color: 'var(--c1)', ink: '#fff', hint: 'materia prima + quota fissa del fornitore' },
@@ -44,8 +44,10 @@ const badge = (t) => `<span class="badge ${t || 'unknown'}">${t === 'fisso' ? 'F
 const days = (b) => (b.periodStart && b.periodEnd ? (new Date(b.periodEnd) - new Date(b.periodStart)) / 864e5 + 1 : 30);
 
 // ---------- stato ----------
-let bills = [];
-let range = 'all'; // periodo predefinito: tutti i mesi
+let locations = []; // una scheda per ogni cartella in data/ (pisa, manfredonia, ...)
+let loc = null;     // scheda attiva
+let bills = [];     // bollette della scheda attiva
+let range = 'all';  // periodo predefinito: tutti i mesi
 
 function status(html) {
   const el = $('status');
@@ -147,6 +149,7 @@ function render() {
     esc(latest.supplier || 'Fornitore n.d.'),
     `offerta attuale <strong>${esc(latest.offer || 'n.d.')}</strong> ${badge(latest.priceType)}${since?.periodStart ? ` dal ${dShort(since.periodStart)}` : ''}`,
     latest.potenza ? `${String(latest.potenza).replace('.', ',')} kW` : '',
+    latest.clientType ? esc(latest.clientType.replace(/^Domestico /, 'domestico ').replace('Residente', 'residente')) : '',
   ].filter(Boolean).join(' · ');
 
   const list = filtered();
@@ -320,20 +323,38 @@ function renderMain(months) {
   });
 }
 
-// Esempio lampadina: costo di un kWh in più (energia + rete e oneri a consumo, IVA inclusa) dall'ultima bolletta
+// Esempio lampadina: quanto costa un kWh in più = quota a consumo (energia + rete + oneri) + accise se si pagano, IVA inclusa.
+// Si sommano le bollette più recenti dello stesso tipo di prezzo fino ad almeno 30 kWh:
+// con consumi minimi (es. 2 kWh in un mese) una bolletta sola darebbe un prezzo falsato dagli arrotondamenti.
 const metered = (b) => (b.bands ? b.bands.f1 + b.bands.f2 + b.bands.f3 : b.kwh);
-const marginal = (b) => (b.quotaConsumi && metered(b) ? (b.quotaConsumi / metered(b)) * (1 + (b.ivaRate ?? 10) / 100) : null);
+function marginalPrice(list, type) {
+  const bs = list.filter((b) => b.quotaConsumi && metered(b) && (!type || b.priceType === type))
+    .sort((a, b) => (b.periodStart || '').localeCompare(a.periodStart || ''));
+  if (!bs.length) return null;
+  const t = bs[0].priceType;
+  let quota = 0, kwh = 0, accise = 0;
+  const used = [];
+  for (const b of bs) {
+    if (b.priceType !== t) break;
+    quota += b.quotaConsumi; kwh += metered(b); accise += (b.acciseRate || 0) * metered(b);
+    used.push(b);
+    if (kwh >= 30) break;
+  }
+  const iva = used[0].ivaRate ?? 10;
+  const from = monthOf(used[used.length - 1]), to = monthOf(used[0]);
+  return { price: ((quota + accise) / kwh) * (1 + iva / 100), type: t, iva, accise: accise > 0, kwh,
+    when: from === to ? mLong(to) : `${mShort(from)} – ${mShort(to)}` };
+}
 function renderLed() {
-  const byDate = [...bills].sort((a, b) => (b.periodStart || '').localeCompare(a.periodStart || ''));
-  const ref = byDate.find((b) => marginal(b));
-  const fixedRef = byDate.find((b) => b.priceType === 'fisso' && marginal(b));
+  const ref = marginalPrice(bills);
+  const fixedRef = ref && ref.type !== 'fisso' ? marginalPrice(bills, 'fisso') : null;
   const out = $('ledOut');
   if (!ref) { out.innerHTML = '<p class="muted">Servono bollette nel formato con lo "scontrino dell\'energia" per calcolare il prezzo.</p>'; return; }
   const f = new FormData($('ledForm'));
   const v = (k, d) => { const x = parseFloat(String(f.get(k)).replace(',', '.')); return Number.isFinite(x) && x >= 0 ? x : d; };
   const w = v('w', 9), br = Math.min(100, v('b', 50)), h = Math.min(24, v('h', 12)), n = Math.max(1, Math.round(v('n', 1))), sb = v('s', 0.3);
   const kwhDay = ((w * br / 100) * h + sb * (24 - h)) * n / 1000;
-  const price = marginal(ref);
+  const price = ref.price;
   const periods = [['Al giorno', 1], ['Al mese', 365 / 12], ["All'anno", 365]];
   const eur3 = (x) => (x < 1 ? x.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 3, maximumFractionDigits: 3 }) : eur.format(x));
   const kwhFmt = (x) => x.toLocaleString('it-IT', { maximumFractionDigits: x < 10 ? 2 : 1 }) + ' kWh';
@@ -342,12 +363,12 @@ function renderLed() {
     <table class="tbl"><thead><tr><th></th><th>Consumo</th><th>Costo</th></tr></thead><tbody>` +
     periods.map(([l, d]) => `<tr><td>${l}</td><td>${kwhFmt(kwhDay * d)}</td><td class="strong">${eur3(kwhDay * d * price)}</td></tr>`).join('') +
     `</tbody></table>
-    <p class="muted small note">Prezzo usato: <strong>${fP(price)}</strong>, cioè quanto ti costa un kWh in più nell'ultima bolletta
-    (${mLong(monthOf(ref))}, ${ref.priceType || 'n.d.'}): energia, rete e oneri a consumo, IVA ${ref.ivaRate ?? 10}% inclusa.
+    <p class="muted small note">Prezzo usato: <strong>${fP(price)}</strong>, cioè quanto ti costa un kWh in più
+    (${ref.when}, prezzo ${ref.type || 'n.d.'}): energia, rete e oneri a consumo${ref.accise ? ', accise' : ''}, IVA ${ref.iva}% inclusa.
     Le quote fisse no, perché le paghi comunque. A metà luminosità si stima metà della potenza.</p>`;
-  if (fixedRef && fixedRef !== ref && ref.priceType !== 'fisso') {
-    const pf = marginal(fixedRef);
-    html += `<p class="small note">Col prezzo fisso di prima (${fP(pf)}, ${mLong(monthOf(fixedRef))}) la stessa lampadina costava
+  if (fixedRef) {
+    const pf = fixedRef.price;
+    html += `<p class="small note">Col prezzo fisso di prima (${fP(pf)}, ${fixedRef.when}) la stessa lampadina costava
       <strong>${eur.format(kwhDay * 365 * pf)}</strong> all'anno invece di <strong>${eur.format(kwhDay * 365 * price)}</strong>.</p>`;
   }
   out.innerHTML = html;
@@ -480,13 +501,39 @@ new ResizeObserver(([e]) => {
   rT = setTimeout(() => { if (bills.length) render(); }, 120);
 }).observe(document.querySelector('.page'));
 
+// ---------- schede (una per casa) ----------
+function renderTabs() {
+  const el = $('locTabs');
+  el.hidden = locations.length < 2;
+  el.innerHTML = locations.map((l) =>
+    `<button type="button" role="tab" data-id="${esc(l.id)}" aria-selected="${l === loc}">${esc(l.name)}<span class="count">${l.bills.length}</span></button>`).join('');
+}
+function selectLocation(id, push = true) {
+  loc = locations.find((l) => l.id === id) || locations[0] || null;
+  bills = loc ? loc.bills : [];
+  range = 'all';
+  document.title = loc && locations.length > 1 ? `Bollette luce · ${loc.name}` : 'Bollette luce';
+  if (push && loc) history.replaceState(null, '', '#' + loc.id);
+  renderTabs();
+  render();
+}
+$('locTabs').addEventListener('click', (e) => {
+  const id = e.target.closest('button')?.dataset.id;
+  if (id && id !== loc?.id) { selectLocation(id); window.scrollTo({ top: 0 }); }
+});
+window.addEventListener('hashchange', () => selectLocation(location.hash.slice(1), false));
+
 // ---------- avvio ----------
 fetch('bollette.json', { cache: 'no-store' })
   .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
   .then((data) => {
-    bills = (Array.isArray(data) ? data : data.bills || []).filter((b) => b && b.costs);
+    const clean = (list) => (list || []).filter((b) => b && b.costs);
+    // formato attuale: { locations: [...] }; formato vecchio: { bills: [...] } con una sola casa
+    locations = data.locations
+      ? data.locations.map((l) => ({ ...l, bills: clean(l.bills) }))
+      : [{ id: 'casa', name: 'Casa', bills: clean(Array.isArray(data) ? data : data.bills) }];
     if (data.generatedAt) $('updated').textContent = `Dati aggiornati il ${new Date(data.generatedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}.`;
-    render();
+    selectLocation(location.hash.slice(1), false);
   })
   .catch((e) => {
     render();
@@ -494,4 +541,4 @@ fetch('bollette.json', { cache: 'no-store' })
   });
 
 // per debug dalla console
-window.__bollette = { get bills() { return bills; } };
+window.__bollette = { get bills() { return bills; }, get locations() { return locations; }, selectLocation };

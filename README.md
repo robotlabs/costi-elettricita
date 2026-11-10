@@ -10,11 +10,13 @@ Pagina statica che legge i PDF delle bollette della luce **direttamente nel brow
 - consumi per fascia F1 / F2 / F3 (dalle letture del contatore)
 - riepilogo anno per anno e tabella di tutte le bollette, con controllo che le voci tornino col totale
 
-Online: https://robotlabs.github.io/costi-elettricita/
+Online: https://robotlabs.github.io/costi-elettricita/ — una scheda per ogni casa (Pisa, Manfredonia).
 
 ## Aggiungere una bolletta
 
-1. Metti il PDF nella cartella `data/` (anche se ricopi tutta la cartella, i duplicati vengono scartati).
+1. Metti il PDF nella cartella della casa: `data/pisa/` o `data/manfredonia/`
+   (anche se ricopi tutta la cartella, i duplicati vengono scartati).
+   Una nuova cartella in `data/` diventa automaticamente una nuova scheda nella pagina.
 2. Lancia:
    ```bash
    npm run deploy

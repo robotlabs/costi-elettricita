@@ -10,7 +10,16 @@ const args = process.argv.slice(2);
 const dir = args.find((a) => !a.startsWith('--')) || 'data';
 const textOnly = args.includes('--text');
 
-const files = textOnly ? [dir] : (await readdir(dir)).filter((f) => f.toLowerCase().endsWith('.pdf')).sort().map((f) => path.join(dir, f));
+// tutti i PDF nella cartella e nelle sottocartelle (data/pisa, data/manfredonia, ...)
+async function pdfsIn(d) {
+  const out = [];
+  for (const e of await readdir(d, { withFileTypes: true })) {
+    if (e.isDirectory()) out.push(...(await pdfsIn(path.join(d, e.name))));
+    else if (e.name.toLowerCase().endsWith('.pdf')) out.push(path.join(d, e.name));
+  }
+  return out.sort();
+}
+const files = textOnly ? [dir] : await pdfsIn(dir);
 const seen = new Map();
 const rows = [];
 for (const file of files) {
@@ -19,17 +28,17 @@ for (const file of files) {
   const text = await pdfToText(pdfjsLib, new Uint8Array(buf));
   if (textOnly) { console.log(text); process.exit(0); }
   const b = parseBill(text);
-  const key = billKey(b);
+  const key = path.dirname(file) + '|' + billKey(b); // duplicati cercati dentro la stessa casa
   const dup = seen.has(key) ? seen.get(key) : null;
   if (!dup) seen.set(key, path.basename(file));
-  rows.push({ file: path.basename(file), dup, hash: hash.slice(0, 8), ...b });
+  rows.push({ file: path.relative(dir, file), dup, hash: hash.slice(0, 8), ...b });
 }
 
 if (args.includes('--json')) {
   console.log(JSON.stringify(rows, null, 2));
 } else {
   const f = (v) => (v == null ? '  —  ' : typeof v === 'number' ? v.toFixed(2).padStart(6) : v);
-  for (const r of rows.sort((a, b) => (a.periodStart || '').localeCompare(b.periodStart || ''))) {
+  for (const r of rows.sort((a, b) => path.dirname(a.file).localeCompare(path.dirname(b.file)) || (a.periodStart || '').localeCompare(b.periodStart || ''))) {
     const c = r.costs;
     console.log(
       [r.periodStart, r.periodEnd, (r.invoiceNo || '?').padEnd(18), (r.priceType || '?').padEnd(9), (r.offer || '?').padEnd(22),

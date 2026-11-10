@@ -6,16 +6,17 @@
   <title>Bollette luce</title>
   <meta name="description" content="Analisi delle bollette della luce: costi, consumi e tariffa, dai PDF letti direttamente nel browser.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M18 2 6 18h8l-2 12 12-16h-8z' fill='%23eda100'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css?v=202611090908">
+  <link rel="stylesheet" href="style.css?v=202611100836">
 </head>
 <body>
   <div class="page">
     <header class="top">
       <div>
         <h1>Bollette luce</h1>
-        <p class="sub" id="supplyInfo"></p>
       </div>
     </header>
+    <nav class="tabs" id="locTabs" role="tablist" aria-label="Casa" hidden></nav>
+    <p class="sub supply" id="supplyInfo"></p>
 
     <div id="status" class="status" role="status" aria-live="polite" hidden></div>
 
@@ -47,7 +48,7 @@
         <div class="card-head">
           <div>
             <h2>Esempio: quanto costa una lampadina LED</h2>
-            <p class="muted small">Una lampadina smart Xiaomi accesa 12 ore al giorno a metà luminosità, al prezzo dell'ultima bolletta. Puoi cambiare i valori.</p>
+            <p class="muted small">Una lampadina smart Xiaomi accesa 12 ore al giorno a metà luminosità, al prezzo delle ultime bollette di questa casa. Puoi cambiare i valori.</p>
           </div>
         </div>
         <div class="led">
@@ -144,6 +145,6 @@
 
   <div id="tip" class="tip" role="tooltip" hidden></div>
 
-  <script type="module" src="js/app.js?v=202611090908"></script>
+  <script type="module" src="js/app.js?v=202611100836"></script>
 </body>
 </html>
